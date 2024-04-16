@@ -5,51 +5,66 @@ import random
 from datetime import datetime
 import json 
 import os 
+import uuid
+
+
 
 fake = Faker()
 
-def getcompany():
-    company = {
-            "name": fake.company(),
-            "industry": fake.bs(),  # Génère un domaine d'activité aléatoire
-            "description": fake.catch_phrase(),
-            "address": fake.address(),
-            "number_of_employees": random.randint(1, 10000),  # Génère un nombre aléatoire d'employés
-            "founded_date": fake.date_between(start_date="-30y", end_date="today")
-        }
-    return company
+
+def get_company():
+    return {
+        "id": str(uuid.uuid4()),
+        "name": fake.company(),
+        "industry": fake.bs(),
+        "description": fake.catch_phrase(),
+        "address": fake.address(),
+        "number_of_employees": random.randint(1, 10000),
+        "founded_date": fake.date_between(start_date="-30y", end_date="today"),
+    }
 
 
-def getcreator():
-    creator = {
-            "name": fake.name(),
-            "username": fake.user_name(),
-            "platform": random.choice(['Instagram', 'YouTube', 'TikTok', 'Twitter']),
-            "bio": fake.sentence(nb_words=10),
-            "number_of_followers": random.randint(1000, 1000000),
-            "number_of_posts": random.randint(10, 1000),
-            "engagement_rate": round(random.uniform(0.5, 5.0), 2),  # Pourcentage d'engagement
-            "topics": fake.words(nb=3, unique=True)  # Sujets de contenu
-        }
-    return creator
+def get_creator():
+    return {
+        "id": str(uuid.uuid4()),
+        "name": fake.name(),
+        "username": fake.user_name(),
+        "platform": random.choice(['Instagram', 'YouTube', 'TikTok', 'Twitter']),
+        "bio": fake.sentence(nb_words=10),
+        "number_of_followers": random.randint(1000, 1000000),
+        "number_of_posts": random.randint(10, 1000),
+        "engagement_rate": round(random.uniform(0.5, 5.0), 2),
+        "topics": fake.words(nb=3, unique=True)
+    }
 
 
-def getcampaign():
-    campaign = {
+def get_campaign(creators,companies):
+    # Randomly select a subset of creators for each campaign
+    selected_creators = random.sample(creators, k=random.randint(5, 10))
+    selected_company = random.sample(companies,k=1)
+    return {
+        "id": str(uuid.uuid4()),
+        "company":selected_company,
         "title": fake.catch_phrase(),
         "description": fake.text(max_nb_chars=200),
         "budget": round(random.uniform(1000, 10000), 2),
         "start_date": str(fake.past_date()),
         "end_date": str(fake.future_date()),
-        "company":getcompany(),
-        "creators":[getcreator() for _ in range(random.randint(1,10))]
+        "creators": selected_creators   
     }
-    return campaign
+
+  
+# Generate all data
+#all_creators = [get_creator() for _ in range(200)]
+#all_companies = [get_company() for _ in range(5)]
+#all_campaigns = [get_campaign(all_creators,all_companies) for _ in range(78)]
+
+#print(all_campaigns[0].keys())
 
 def generateData(nb_campaign=0,nb_company=0,nb_creator=0):
-    campaigns = [getcampaign() for _ in range(nb_campaign)]
-    companys = [getcompany() for _ in range(nb_company)]
-    creators = [getcreator() for _ in range(nb_creator)]
+    companys = [get_company() for _ in range(nb_company)]
+    creators = [get_creator() for _ in range(nb_creator)]
+    campaigns = [get_campaign(creators,companys) for _ in range(nb_campaign)]
 
     return {'creators':creators,'companys':companys,'campaigns':campaigns}
 
