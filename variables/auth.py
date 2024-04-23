@@ -38,3 +38,13 @@ CREATE TABLE IF NOT EXISTS coveer_db.password_resets (
     used BOOLEAN NOT NULL DEFAULT 0
 );
 """)
+
+
+create_logs_table = text('''CREATE TABLE IF NOT EXISTS logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    user_id INT,
+    event_type VARCHAR(255),
+    description TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE SET NULL
+);''')

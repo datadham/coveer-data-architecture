@@ -45,6 +45,7 @@ with engine.begin() as connection:
     connection.execute(create_users_table)
     connection.execute(create_social_logins_table)
     connection.execute(create_password_resets_table)
+    connection.execute(create_logs_table)
     print('AUTH tables are setup successfully')
 
 
@@ -68,10 +69,13 @@ with engine.begin() as connection:
     print('CORE tables are setup successfully')
 
 
-# core tables creation
+# create procedure auth creation
 with engine.begin() as connection:
-    # .variables/core tables 
+    # .sql/auth tables 
     connection.execute(create_add_user_procedure)
+    connection.execute(create_modify_user_procedure)
+    connection.execute(create_get_user_procedure)
+    connection.execute(create_delete_user_procedure)
     print('procedure added successffully')
     
     
