@@ -13,7 +13,7 @@ BEGIN
     DECLARE v_token VARCHAR(6);
     SET v_token = LPAD(FLOOR(RAND() * 999999), 6, '0');
     INSERT INTO users (email, password_hash, profile_type, email_verification_token)
-    VALUES (p_email, SHA2(p_pass word, 256), p_profile_type, v_token);
+    VALUES (p_email, SHA2(p_password, 256), p_profile_type, v_token);
     SELECT 'User registered successfully.' AS Message;
 END;
 """)
@@ -51,20 +51,20 @@ END;''')
 #--------------------------------------------------------------------------------------------------#
 
 create_generate_reset_token_procedure = text('''CREATE PROCEDURE GenerateResetToken(
-        IN p_user_id INT
-    )
-    BEGIN
-        DECLARE v_token VARCHAR(10);
-        DECLARE v_expiration_date DATETIME;
+    IN p_user_id INT
+)
+BEGIN
+    DECLARE v_token VARCHAR(10);
+    DECLARE v_expiration_date DATETIME;
 
-        SET v_token = LPAD(FLOORRAND() * 9999999999), 6, '0');
-        SET v_expiration_date = DATE_ADD(NOW(), INTERVAL 24 HOUR);
+    SET v_token = LPAD(FLOOR(RAND() * 9999999999), 6, '0');
+    SET v_expiration_date = DATE_ADD(NOW(), INTERVAL 24 HOUR);
 
-        INSERT INTO password_resets (user_id, reset_token, expiration_date, used)
-        VALUES (p_user_id, v_token, v_expiration_date, 0);
+    INSERT INTO password_resets (user_id, reset_token, expiration_date, used)
+    VALUES (p_user_id, v_token, v_expiration_date, 0);
 
-        SELECT v_token AS ResetToken;
-    END;''')
+    SELECT v_token AS ResetToken;
+END;''')
 
 
 # check if the token is valid or not 
@@ -111,7 +111,7 @@ BEGIN
     INSERT INTO logs (user_id, event_type, description)
     VALUES (p_user_id, p_event_type, p_description);
     SELECT 'Log entry added successfully.' AS Message;
-END;)''')
+END;''')
 
 
 
@@ -124,7 +124,7 @@ BEGIN
     SET description = p_description
     WHERE log_id = p_log_id;
     SELECT 'Log entry updated successfully.' AS Message;
-END''' ;)
+END;''' )
 
 
 create_delete_log_procedure = text('''CREATE PROCEDURE DeleteLog(

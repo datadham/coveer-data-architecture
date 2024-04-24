@@ -71,12 +71,28 @@ with engine.begin() as connection:
 
 # create procedure auth creation
 with engine.begin() as connection:
-    # .sql/auth tables 
+    # .sql/auth USER PROCEDURE
     connection.execute(create_add_user_procedure)
     connection.execute(create_modify_user_procedure)
     connection.execute(create_get_user_procedure)
     connection.execute(create_delete_user_procedure)
-    print('procedure added successffully')
+    print('user procedure added successffully')
+    
+    # reset passsword procedure 
+    connection.execute(create_generate_reset_token_procedure)
+    connection.execute(create_verify_reset_token_procedure)
+    connection.execute(create_mark_token_used_procedure)
+    print('reset password procedure added successffully')
+    
+    
+    # Log table procedure 
+    connection.execute(create_add_log_procedure )
+    connection.execute(create_modify_log_procedure)
+    connection.execute(create_delete_log_procedure)
+    connection.execute(create_get_log_procedure)
+    print('reset password procedure added successffully')
     
     
     
+    
+     
