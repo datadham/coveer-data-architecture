@@ -144,3 +144,12 @@ BEGIN
     SELECT * FROM logs
     WHERE log_id = p_log_id;
 END;''')
+
+
+create_get_log_procedure = text('''CREATE PROCEDURE UserLog(
+    IN p_user_id INT
+)
+BEGIN
+    SELECT * FROM logs
+    WHERE user_id = p_user_id;
+END;''')

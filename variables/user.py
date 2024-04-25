@@ -35,5 +35,6 @@ CREATE TABLE IF NOT EXISTS followers (
     participation_id INTEGER,
     cookies TEXT,
     join_date DATETIME DEFAULT CURRENT_TIMESTAMP
+    -- FOREIGN KEY (participation_id) REFERENCES participation(participation_id) ON DELETE CASCADE
 );''')
 
