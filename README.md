@@ -1,7 +1,7 @@
 
 ## Data Model Structure
 
-<img src="./images/data_model.png" />
+<img src="./img/data_model.png" />
 
 ### 1. Users
 - **Fields:**
