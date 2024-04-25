@@ -1,123 +1,89 @@
-# API Documentation
 
-This API provides endpoints for managing companies, campaigns, creators, participations, followers, and users. Each entity has endpoints to handle CRUD (Create, Read, Update, Delete) operations.
+## Data Model Structure
 
-## Company API
+### 1. Users
+- **Fields:**
+  - `user_id`: Unique identifier for the user.
+  - `password_hash`: Hashed password for security.
+  - `profile_type`: Type of user profile.
+  - `email_verified`: Boolean indicating if the email associated with the user account is verified.
+  - `verification_token`: Token used for verifying the user's email.
+  - `created_at`: Date and time the user was created.
+  - `updated_at`: Date and time the user was last updated.
 
-### Create a Company
-- **POST** `/companies`
-  - Description: Create a new company record.
+### 1.1. PasswordReset
+- **Fields:**
+  - `reset_id`: Identifier for the reset record.
+  - `user_id`: Links to the Users table (1-M relationship).
+  - `reset_token`: Token used for verifying the reset request.
+  - `expiration_date`: Date and time when the token expires.
+  - `created_at`: Date and time when the reset request was created.
+  - `used`: Boolean indicating if the reset token has been used.
 
-### Get Company
-- **GET** `/companies/{company_id}`
-  - Description: Retrieve a specific company by `company_id`.
+### 1.2. SocialLogin
+- **Fields:**
+  - `social_id`: Unique identifier for the social login record.
+  - `user_id`: Links to the Users table (1-M relationship).
+  - `provider`: Social login provider (e.g., Google, Facebook).
+  - `social_user_id`: Identifier for the user on the social platform.
+  - `created_at`: Date and time the social login was created.
+  - `updated_at`: Date and time the social login was last updated.
 
-### Update Company
-- **PUT** `/companies/{company_id}`
-  - Description: Update an existing company record.
 
-### Delete Company
-- **DELETE** `/companies/{company_id}`
-  - Description: Remove a company record.
 
-### List Companies
-- **GET** `/companies`
-  - Description: Retrieve all companies.
+### 2. Company
+- **Fields:**
+  - `company_id`: Unique identifier for the company.
+  - `user_id`: Links to the Users table (1-M relationship).
+  - `name`: Name of the company.
+  - `industry`: Industry sector of the company.
+  - `address`: Physical address of the company.
+  - `contact_email`: Contact email for the company.
+  - `website`: Company website URL.
+  - `description`: Brief description of the company.
 
-## Campaign API
+### 3. Creator
+- **Fields:**
+  - `creator_id`: Unique identifier for the creator.
+  - `user_id`: Links to the Users table (1-M relationship).
+  - `name`: Name of the creator.
+  - `bio`: Biography of the creator.
+  - `social_media_links`: Links to the creator's social media profiles.
+  - `specialties`: Creator's areas of expertise.
+  - `audience_size`: Size of the creator's audience.
+  - `contact_email`: Contact email for the creator.
+  - `website`: Creator's website URL.
 
-### Create a Campaign
-- **POST** `/campaigns`
-  - Description: Create a new campaign record.
+### 4. Campaign
+- **Fields:**
+  - `campaign_id`: Unique identifier for the campaign.
+  - `company_id`: Links to the Company table (1-M relationship).
+  - `title`: Title of the campaign.
+  - `description`: Description of the campaign.
+  - `start_date`: Start date of the campaign.
+  - `end_date`: End date of the campaign.
+  - `campaign_status`: Status of the campaign (e.g., active, completed).
+  - `campaign_code`: Unique code for the campaign.
+  - `target_audience`: Target audience for the campaign.
+  - `budget`: Budget allocated for the campaign.
+  - `actual_spending`: Actual spending on the campaign.
+  - `campaign_result`: Results of the campaign.
 
-### Get Campaign
-- **GET** `/campaigns/{campaign_id}`
-  - Description: Retrieve a specific campaign by `campaign_id`.
+### 5. Participation
+- **Fields:**
+  - `participation_id`: Unique identifier for the participation.
+  - `participation_link`: Link to the participation content.
+  - `participation_code`: Code used for participation tracking.
+  - `campaign_id`: Links to the Campaign table (1-M relationship).
+  - `creator_id`: Links to the Creator table (1-M relationship).
+  - `status`: Status of the participation (e.g., active, completed).
+  - `role`: Role of the participant in the campaign.
+  - `join_date`: Date the participant joined the campaign.
 
-### Update Campaign
-- **PUT** `/campaigns/{campaign_id}`
-  - Description: Update an existing campaign record.
 
-### Delete Campaign
-- **DELETE** `/campaigns/{campaign_id}`
-  - Description: Remove a campaign record.
-
-### List Campaigns by Company
-- **GET** `/companies/{company_id}/campaigns`
-  - Description: Retrieve all campaigns for a specific company.
-
-## Creator API
-
-### Create a Creator
-- **POST** `/creators`
-  - Description: Create a new creator record.
-
-### Get Creator
-- **GET** `/creators/{creator_id}`
-  - Description: Retrieve a specific creator by `creator_id`.
-
-### Update Creator
-- **PUT** `/creators/{creator_id}`
-  - Description: Update an existing creator record.
-
-### Delete Creator
-- **DELETE** `/creators/{creator_id}`
-  - Description: Remove a creator record.
-
-### List Creators
-- **GET** `/creators`
-  - Description: Retrieve all creators.
-
-## Participation API
-
-### Create Participation
-- **POST** `/participations`
-  - Description: Create a new participation record.
-
-### Get Participation
-- **GET** `/participations/{participation_id}`
-  - Description: Retrieve a specific participation by `participation_id`.
-
-### Update Participation
-- **PUT** `/participations/{participation_id}`
-  - Description: Update an existing participation record.
-
-### Delete Participation
-- **DELETE** `/participations/{participation_id}`
-  - Description: Remove a participation record.
-
-## User API
-
-### Create User
-- **POST** `/users`
-  - Description: Create a new user record.
-
-### Get User
-- **GET** `/users/{user_id}`
-  - Description: Retrieve a specific user by `user_id`.
-
-### Update User
-- **PUT** `/users/{user_id}`
-  - Description: Update an existing user record.
-
-### Delete User
-- **DELETE** `/users/{user_id}`
-  - Description: Remove a user record.
-
-### List Users
-- **GET** `/users`
-  - Description: Retrieve all users.
-
-## Authentication and Authorization
-
-### Authenticate User
-- **POST** `/auth/login`
-  - Description: Authenticate a user and return a token.
-
-### Register User
-- **POST** `/auth/register`
-  - Description: Register a new user.
-
-### Password Reset
-- **POST** `/auth/password-reset`
-  - Description: Initiate a password reset process.
+### 6 Followers
+- **Fields:**
+  - `follower_id`: Unique identifier for the follower.
+  - `participation_id`: Links to the Participation table (1-M relationship).
+  - `cookies`: Cookies used for tracking the follower.
+  - `join_date`: Date the follower joined.
