@@ -46,9 +46,7 @@ BEGIN
 END;''')
 
 
-#--------------------------------------------------------------------------------------------------#
-### PASSWORD RESET
-#--------------------------------------------------------------------------------------------------#
+### PASSWORD RESET ###
 
 create_generate_reset_token_procedure = text('''CREATE PROCEDURE GenerateResetToken(
     IN p_user_id INT
@@ -67,7 +65,7 @@ BEGIN
 END;''')
 
 
-# check if the token is valid or not 
+# Check if the token is valid or not 
 create_verify_reset_token_procedure = text('''CREATE PROCEDURE VerifyResetToken(
     IN p_user_id INT,
     IN p_reset_token VARCHAR(6),
@@ -82,7 +80,7 @@ BEGIN
 END;''')
 
 
-# mark the token as used 
+# Mark the token as used 
 create_mark_token_used_procedure = text('''CREATE PROCEDURE MarkTokenAsUsed(
     IN p_reset_id INT
 )
@@ -95,13 +93,7 @@ BEGIN
 END;''')
 
 
-
-
-#--------------------------------------------------------------------------------------------------#
-### LOGS PROCEDURE 
-#--------------------------------------------------------------------------------------------------#
-
-
+### LOGS PROCEDURE ##
 create_add_log_procedure = text('''CREATE PROCEDURE AddLog(
     IN p_user_id INT,
     IN p_event_type VARCHAR(255),
@@ -112,8 +104,6 @@ BEGIN
     VALUES (p_user_id, p_event_type, p_description);
     SELECT 'Log entry added successfully.' AS Message;
 END;''')
-
-
 
 create_modify_log_procedure = text('''CREATE PROCEDURE ModifyLog(
     IN p_log_id INT,
@@ -126,7 +116,6 @@ BEGIN
     SELECT 'Log entry updated successfully.' AS Message;
 END;''' )
 
-
 create_delete_log_procedure = text('''CREATE PROCEDURE DeleteLog(
     IN p_log_id INT
 )
@@ -136,7 +125,6 @@ BEGIN
     SELECT 'Log entry deleted successfully.' AS Message;
 END;''')
 
-
 create_get_log_procedure = text('''CREATE PROCEDURE GetLog(
     IN p_log_id INT
 )
@@ -145,8 +133,7 @@ BEGIN
     WHERE log_id = p_log_id;
 END;''')
 
-
-create_get_log_procedure = text('''CREATE PROCEDURE UserLog(
+create_get_log_user_procedure = text('''CREATE PROCEDURE GetUserLog(
     IN p_user_id INT
 )
 BEGIN
