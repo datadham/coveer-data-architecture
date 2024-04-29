@@ -45,6 +45,33 @@ BEGIN
     SELECT 'User updated successfully.' AS Message;
 END;''')
 
+create_verify_user_procedure = text('''
+CREATE PROCEDURE VerifyUser(
+    IN p_email VARCHAR(255),
+    IN p_password VARCHAR(255),
+    OUT p_result BOOLEAN
+)
+BEGIN
+    -- Declare a variable to store the fetched password hash from the database
+    DECLARE v_password_hash VARCHAR(256);
+
+    -- Retrieve the password hash for the given email
+    SELECT password_hash INTO v_password_hash
+    FROM users
+    WHERE email = p_email;
+
+    -- Check if the user exists and the password is correct
+    IF v_password_hash IS NULL THEN
+        SET p_result = FALSE;  -- No such user exists
+    ELSEIF v_password_hash = SHA2(p_password, 256) THEN
+        SET p_result = TRUE;  -- User verified successfully
+    ELSE
+        SET p_result = FALSE;  -- Incorrect password
+    END IF;
+END;
+''')
+
+
 
 ### PASSWORD RESET ###
 

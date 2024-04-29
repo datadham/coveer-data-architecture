@@ -11,6 +11,7 @@ def setup_procedure(engine):
         connection.execute(create_modify_user_procedure)
         connection.execute(create_get_user_procedure)
         connection.execute(create_delete_user_procedure)
+        connection.execute(create_verify_user_procedure)
         print('user procedure added successffully')
         
         # reset passsword procedure 
