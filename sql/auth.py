@@ -45,7 +45,7 @@ BEGIN
     SELECT 'User updated successfully.' AS Message;
 END;''')
 
-create_verify_user_procedure = text('''
+create_verify_user_procedure = text("""
 CREATE PROCEDURE VerifyUser(
     IN p_email VARCHAR(255),
     IN p_password VARCHAR(255),
@@ -69,9 +69,7 @@ BEGIN
         SET p_result = FALSE;  -- Incorrect password
     END IF;
 END;
-''')
-
-
+""")
 
 ### PASSWORD RESET ###
 
