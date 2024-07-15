@@ -11,13 +11,14 @@ def setup_procedure(engine):
         connection.execute(create_modify_user_procedure)
         connection.execute(create_get_user_procedure)
         connection.execute(create_delete_user_procedure)
-        connection.execute(create_verify_user_procedure)
+        connection.execute(create_login_user_procedure)
+        connection.execute(create_verify_email_procedure)
         print('user procedure added successffully')
         
         # reset passsword procedure 
         connection.execute(create_generate_reset_token_procedure)
-        connection.execute(create_verify_reset_token_procedure)
-        connection.execute(create_mark_token_used_procedure)
+        connection.execute(create_update_password_procedure)
+        connection.execute(create_flag_user_procedure )
         print('reset password procedure added successffully')
         
         
@@ -37,21 +38,18 @@ def setup_procedure(engine):
         connection.execute(create_add_company_procedure)
         connection.execute(create_get_company_procedure)
         connection.execute(create_modify_company_procedure)
-        connection.execute(create_delete_company_procedure)
         print('Company procedures added successfully.')
 
         # Creators-related procedures
         connection.execute(create_add_creator_procedure)
         connection.execute(create_get_creator_procedure)
         connection.execute(create_modify_creator_procedure)
-        connection.execute(create_delete_creator_procedure)
         print('Creator procedures added successfully.')
 
         # Followers-related procedures
         connection.execute(create_add_follower_procedure)
         connection.execute(create_get_follower_procedure)
         connection.execute(create_modify_follower_procedure)
-        connection.execute(create_delete_follower_procedure)
         print('Follower procedures added successfully.')
         
         

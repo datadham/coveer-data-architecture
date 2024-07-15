@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS companies (
     name VARCHAR(255) NOT NULL,
     industry VARCHAR(255),
     address TEXT,
-    contact_email VARCHAR(255),
+    email VARCHAR(255),
     website VARCHAR(255),
     description TEXT,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS creators (
     social_media_links TEXT,  -- JSON or serialized text format to store multiple links
     specialties TEXT,  -- Could be a list of specialties or focus areas
     audience_size INTEGER,
-    contact_email VARCHAR(255),
+    email VARCHAR(255),
     website VARCHAR(255),  -- Changed from URL to VARCHAR
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );''')

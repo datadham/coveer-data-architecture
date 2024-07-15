@@ -7,7 +7,8 @@ CREATE TABLE IF NOT EXISTS coveer_db.users (
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     profile_type VARCHAR(255) DEFAULT 'creator',
-    email_verified BOOLEAN NOT NULL DEFAULT 0,
+    flag_access TINYINT(1) DEFAULT 1, -- Explicitly using TINYINT(1) for clarity
+    email_verified TINYINT(1) DEFAULT 0, -- Explicitly using TINYINT(1) for clarity
     email_verification_token VARCHAR(255),
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
